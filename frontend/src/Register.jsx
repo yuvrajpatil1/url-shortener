@@ -11,11 +11,14 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/api/register", {
-        name,
-        email,
-        password,
-      });
+      await axios.post(
+        "https://url-shortener-backend-0bgv.onrender.com/api/register",
+        {
+          name,
+          email,
+          password,
+        }
+      );
       alert("Registration successful! Please log in.");
       navigate("/login");
     } catch (err) {

@@ -13,11 +13,14 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:5000/api/login", {
-        name,
-        email,
-        password,
-      });
+      const res = await axios.post(
+        "https://url-shortener-backend-0bgv.onrender.com/api/login",
+        {
+          name,
+          email,
+          password,
+        }
+      );
       login(res.data.token, res.data.email, res.data.name);
       alert("Login successful");
       navigate("/"); // Redirect to homepage

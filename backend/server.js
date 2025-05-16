@@ -17,6 +17,14 @@ app.use(function (req, res, next) {
   );
   next();
 });
+const corsOptions = {
+  origin: "https://slashbyhash.vercel.app", // frontend domain
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 require("dotenv").config();

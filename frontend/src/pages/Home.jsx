@@ -105,7 +105,7 @@ function Home() {
       <div className="bg-[#0F172B] border border-[#121D3E] rounded-lg flex flex-col lg:flex-row items-center gap-8 px-6 sm:px-10 pt-4 pb-12 text-white">
         {/* Form */}
         <div className="w-full lg:w-1/2">
-          <h2 className="text-3xl sm:text-3xl font-semibold text-center mb-4">
+          <h2 className="text-3xl pt-2 sm:text-3xl font-semibold text-center mb-4">
             Shorten a URL
           </h2>
 

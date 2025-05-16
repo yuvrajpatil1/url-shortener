@@ -9,15 +9,14 @@ const User = require("./models/User");
 
 const app = express();
 
-const corsOptions = {
-  origin: "*", // Your frontend domain
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true,
-};
-
-// Global CORS middleware
-app.use(cors(corsOptions));
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "YOUR-DOMAIN.TLD"); // update to match the domain you will make the request from
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
 app.use(express.json());
 
 require("dotenv").config();
@@ -50,7 +49,7 @@ const auth = (req, res, next) => {
 
 console.log("Hiiiiiii");
 // Register new user
-app.post("/api/register", async (req, res) => {
+app.post("/api/register", async (req, res, next) => {
   const { name, email, password } = req.body;
   try {
     const user = new User({ name, email, password });
@@ -66,7 +65,7 @@ app.post("/api/register", async (req, res) => {
 });
 
 // Login user
-app.post("/api/login", async (req, res) => {
+app.post("/api/login", async (req, res, next) => {
   const { name, email, password } = req.body;
   try {
     const user = await User.findOne({ email });
@@ -87,7 +86,7 @@ app.post("/api/login", async (req, res) => {
 });
 
 // POST: Shorten URL
-// app.post("/api/shorten", async (req, res) => {
+// app.post("/api/shorten", async (req, res, next) => {
 //   const { longUrl, customUrl } = req.body;
 //   console.log("Call done!");
 //   // CASE 1: User provided custom URL
@@ -146,7 +145,7 @@ app.post("/api/login", async (req, res) => {
 //   });
 // });
 
-app.post("/api/shorten", async (req, res) => {
+app.post("/api/shorten", async (req, res, next) => {
   const { longUrl, customUrl } = req.body;
 
   // Optional: get userId if auth token exists & is valid
@@ -220,14 +219,14 @@ app.post("/api/shorten", async (req, res) => {
   }
 });
 
-app.get("/api/urls", auth, async (req, res) => {
+app.get("/api/urls", auth, async (req, res, next) => {
   const userId = req.user.userId;
   const urls = await Url.find({ userId });
   res.json(urls);
 });
 
 // GET: Redirect to long URL
-app.get("/:shortUrl", async (req, res) => {
+app.get("/:shortUrl", async (req, res, next) => {
   const { shortUrl } = req.params;
   const url = await Url.findOne({
     $or: [{ shortUrl }, { customUrl: shortUrl }],
@@ -240,7 +239,7 @@ app.get("/:shortUrl", async (req, res) => {
   res.redirect(url.longUrl);
 });
 
-app.delete("/api/urls/:id", auth, async (req, res) => {
+app.delete("/api/urls/:id", auth, async (req, res, next) => {
   const userId = req.user.userId;
   const url = await Url.findOne({ _id: req.params.id, userId });
 
@@ -252,7 +251,7 @@ app.delete("/api/urls/:id", auth, async (req, res) => {
 });
 
 // GET: Stats
-app.get("/api/stats/:shortUrl", async (req, res) => {
+app.get("/api/stats/:shortUrl", async (req, res, next) => {
   const url = await Url.findOne({
     $or: [
       { shortUrl: req.params.shortUrl },

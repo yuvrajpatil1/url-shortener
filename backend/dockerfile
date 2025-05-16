@@ -1,0 +1,26 @@
+# Use a base image with Node.js and OpenJDK
+FROM node:18
+
+# Install Java (OpenJDK 17)
+RUN apt-get update && \
+    apt-get install -y openjdk-17-jdk && \
+    apt-get clean;
+
+# Set working directory
+WORKDIR /app
+
+# Copy package files and install deps
+COPY package*.json ./
+RUN npm install
+
+# Copy the rest of your code
+COPY . .
+
+# Compile your Java class
+RUN javac HashGenerator.java
+
+# Expose port (if needed, e.g., 3000)
+EXPOSE 3000
+
+# Start your Node.js server
+CMD ["npm", "start"]

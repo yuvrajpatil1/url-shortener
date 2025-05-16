@@ -11,11 +11,14 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`/api/register`, {
-        name,
-        email,
-        password,
-      });
+      await axios.post(
+        `${import.meta.env.VITE_REACT_APP_BACKEND_URL}/api/register`,
+        {
+          name,
+          email,
+          password,
+        }
+      );
       alert("Registration successful! Please log in.");
       navigate("/login");
     } catch (err) {

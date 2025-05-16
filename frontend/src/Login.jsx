@@ -13,14 +13,11 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(
-        `${import.meta.env.VITE_REACT_APP_BACKEND_URL}/api/login`,
-        {
-          name,
-          email,
-          password,
-        }
-      );
+      const res = await axios.post(`/api/login`, {
+        name,
+        email,
+        password,
+      });
       login(res.data.token, res.data.email, res.data.name);
       alert("Login successful");
       navigate("/"); // Redirect to homepage

@@ -23,12 +23,9 @@ function Home() {
 
   const fetchUserUrls = async () => {
     try {
-      const res = await axios.get(
-        `${import.meta.env.VITE_REACT_APP_BACKEND_URL}/api/urls`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      const res = await axios.get(`/api/urls`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setUserUrls(res.data);
     } catch (err) {
       console.error(err);
@@ -42,7 +39,7 @@ function Home() {
         : {}; // no auth headers for guest
 
       const res = await axios.post(
-        `${import.meta.env.VITE_REACT_APP_BACKEND_URL}/api/shorten`,
+        `/api/shorten`,
         { longUrl, customUrl },
         config
       );
@@ -62,12 +59,9 @@ function Home() {
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this URL?")) return;
     try {
-      await axios.delete(
-        `${import.meta.env.VITE_REACT_APP_BACKEND_URL}/api/urls/${id}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      await axios.delete(`/api/urls/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       fetchUserUrls();
     } catch (err) {
       alert("Failed to delete");

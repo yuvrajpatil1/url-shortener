@@ -156,7 +156,7 @@ function Home() {
               <div className="text-center break-words text-xl sm:text-2xl mt-4">
                 <p>
                   <strong>Short URL:</strong>{" "}
-                  <a href={shortUrl} className="text-indigo-400 underline">
+                  <a href={url.longUrl} className="text-indigo-400 underline">
                     {shortUrl}
                   </a>
                 </p>
@@ -166,7 +166,7 @@ function Home() {
         </div>
 
         {/* QR Code */}
-        {shortUrl && qrCode && (
+        {qrCode && (
           <div className="flex flex-col items-center justify-center text-center w-full lg:w-1/2">
             <p className="text-xl sm:text-2xl font-semibold mb-4">QR Code:</p>
             <img

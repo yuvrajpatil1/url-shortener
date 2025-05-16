@@ -156,7 +156,7 @@ function Home() {
               <div className="text-center break-words text-xl sm:text-2xl mt-4">
                 <p>
                   <strong>Short URL:</strong>{" "}
-                  <a href={longUrl} className="text-indigo-400 underline">
+                  <a href={shortUrl} className="text-indigo-400 underline">
                     {shortUrl}
                   </a>
                 </p>

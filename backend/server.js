@@ -8,7 +8,6 @@ const jwt = require("jsonwebtoken");
 const User = require("./models/User");
 
 const app = express();
-app.use(express.json());
 
 const corsOptions = {
   origin: "*", // Your frontend domain
@@ -19,9 +18,7 @@ const corsOptions = {
 
 // Global CORS middleware
 app.use(cors(corsOptions));
-
-// Optional: Manually respond to preflight OPTIONS requests if needed
-app.options("/", cors(corsOptions));
+app.use(express.json());
 
 require("dotenv").config();
 

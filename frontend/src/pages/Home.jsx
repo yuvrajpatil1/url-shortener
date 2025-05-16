@@ -37,25 +37,23 @@ function Home() {
 
   const handleShorten = async () => {
     try {
-      const config = token
-        ? {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        : {}; // no auth headers for guest
+      const headers = {
+        "Content-Type": "application/json",
+      };
+
+      if (token) {
+        headers["Authorization"] = `Bearer ${token}`;
+      }
 
       const res = await axios.post(
         `${import.meta.env.VITE_REACT_APP_BACKEND_URL}/api/shorten`,
         { longUrl, customUrl },
-        config
+        { headers }
       );
 
       setShortUrl(`https://slashbyhash.vercel.app/${res.data.shortUrl}`);
       setQrCode(res.data.qrCode);
 
-      // fetch user URLs only if logged in
       if (token) {
         fetchUserUrls();
       }

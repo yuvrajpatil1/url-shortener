@@ -14,11 +14,7 @@
   ],
   "rewrites": [
     {
-      "source": "/:shortUrl((?!api|login|register|dashboard|home)[a-zA-Z0-9_-]{5,})",
-      "destination": "https://url-shortener-backend-0bgv.onrender.com/:shortUrl"
-    },
-    {
-      "source": "/api/:path*",
+      "source": "/api/:path((?!api|login|register|dashboard|home)[a-zA-Z0-9_-]{5,})",
       "destination": "https://url-shortener-backend-0bgv.onrender.com/api/:path*"
     }
   ]

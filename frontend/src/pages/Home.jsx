@@ -24,7 +24,7 @@ function Home() {
   const fetchUserUrls = async () => {
     try {
       const res = await axios.get(
-        `https://url-shortener-backend-0bgv.onrender.com/api/urls`,
+        "https://url-shortener-backend-0bgv.onrender.com/api/urls",
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -42,14 +42,12 @@ function Home() {
         : {}; // no auth headers for guest
 
       const res = await axios.post(
-        `https://url-shortener-backend-0bgv.onrender.com/api/shorten`,
+        "https://url-shortener-backend-0bgv.onrender.com/api/shorten",
         { longUrl, customUrl },
         config
       );
 
-      setShortUrl(
-        `https://url-shortener-backend-0bgv.onrender.com/${res.data.shortUrl}`
-      );
+      setShortUrl(`https://slashbyhash/${res.data.shortUrl}`);
       setQrCode(res.data.qrCode);
 
       // fetch user URLs only if logged in
@@ -83,7 +81,7 @@ function Home() {
     <div className="px-4 sm:px-8 md:px-16 lg:px-24 mt-26">
       {token ? (
         <h1 className="text-xl sm:text-4xl md:font-semibold text-center mb-8">
-          Welcome, {email}!
+          Welcome, {name || email}!
         </h1>
       ) : (
         <div className="text-center mb-8">
@@ -196,7 +194,7 @@ function Home() {
               </thead>
               <tbody>
                 {userUrls.map((url) => {
-                  const fullShort = `http://localhost:5173/${
+                  const fullShort = `https://slashbyhash/${
                     url.customUrl || url.shortUrl
                   }`;
                   return (

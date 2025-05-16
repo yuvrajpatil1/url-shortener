@@ -18,7 +18,7 @@ app.use(function (req, res, next) {
   next();
 });
 const corsOptions = {
-  origin: "https://slashbyhash.vercel.app", // frontend domain
+  origin: "*",
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,

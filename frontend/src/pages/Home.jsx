@@ -23,9 +23,12 @@ function Home() {
 
   const fetchUserUrls = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/urls", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await axios.get(
+        `https://url-shortener-backend-0bgv.onrender.com/api/urls`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       setUserUrls(res.data);
     } catch (err) {
       console.error(err);
@@ -39,12 +42,14 @@ function Home() {
         : {}; // no auth headers for guest
 
       const res = await axios.post(
-        "http://localhost:5000/api/shorten",
+        `https://url-shortener-backend-0bgv.onrender.com/api/shorten`,
         { longUrl, customUrl },
         config
       );
 
-      setShortUrl(`http://localhost:5173/${res.data.shortUrl}`);
+      setShortUrl(
+        `https://url-shortener-backend-0bgv.onrender.com/${res.data.shortUrl}`
+      );
       setQrCode(res.data.qrCode);
 
       // fetch user URLs only if logged in
@@ -59,9 +64,12 @@ function Home() {
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this URL?")) return;
     try {
-      await axios.delete(`http://localhost:5000/api/urls/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await axios.delete(
+        `https://url-shortener-backend-0bgv.onrender.com/api/urls/${id}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       fetchUserUrls();
     } catch (err) {
       alert("Failed to delete");
@@ -75,7 +83,7 @@ function Home() {
     <div className="px-4 sm:px-8 md:px-16 lg:px-24 mt-26">
       {token ? (
         <h1 className="text-xl sm:text-4xl md:font-semibold text-center mb-8">
-          Welcome, {name}!
+          Welcome, {email}!
         </h1>
       ) : (
         <div className="text-center mb-8">

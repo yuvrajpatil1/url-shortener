@@ -229,7 +229,7 @@ function Home() {
         </div>
       )}
 
-      <div className="text-sm bottom-0 md:mt-29 mt-90 text-[white] p-4 border-t-2 border-gray-600 text-center">
+      <div className="text-sm bottom-0 md:mt-29 mt-84 text-[white] p-4 border-t-2 border-gray-600 text-center">
         Developed with ❤️ by{" "}
         <a
           className="underline"

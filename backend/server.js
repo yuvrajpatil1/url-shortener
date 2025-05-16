@@ -181,7 +181,6 @@ app.post("/api/shorten", async (req, res, next) => {
       return res.json({ shortUrl: customUrl, qrCode: qrCodeData });
     }
 
-    // 🔁 Generate hash using JavaScript
     const shortUrl = shortURL(longUrl);
 
     if (!shortUrl) {
@@ -212,18 +211,27 @@ app.get("/api/urls", auth, async (req, res, next) => {
   res.json(urls);
 });
 
-// GET: Redirect to long URL
-app.get("/:shortUrl", async (req, res, next) => {
+app.get("/:shortUrl", async (req, res) => {
   const { shortUrl } = req.params;
-  const url = await Url.findOne({
-    $or: [{ shortUrl }, { customUrl: shortUrl }],
-  });
 
-  if (!url) return res.status(404).send("URL not found");
+  try {
+    const urlDoc = await Url.findOne({
+      $or: [{ shortUrl }, { customUrl: shortUrl }],
+    });
 
-  url.usageCount += 1;
-  await url.save();
-  res.redirect(url.longUrl);
+    if (!urlDoc) {
+      return res.status(404).send("Short URL not found");
+    }
+
+    // Optional: Track usage
+    urlDoc.usageCount += 1;
+    await urlDoc.save();
+
+    return res.redirect(urlDoc.longUrl);
+  } catch (err) {
+    console.error("Redirect failed:", err);
+    return res.status(500).send("Server error");
+  }
 });
 
 app.delete("/api/urls/:id", auth, async (req, res, next) => {

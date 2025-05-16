@@ -10,12 +10,14 @@ const User = require("./models/User");
 const app = express();
 app.use(express.json());
 
-const corsOptions = {
-  origin: "https://slashbyhash.vercel.app", // ✅ your frontend domain
-  methods: ["POST", "GET", "DELETE", "PUT"],
-  credentials: true,
-};
-app.use(cors(corsOptions));
+app.use(
+  cors({
+    origin: "https://slashbyhash.vercel.app", // Replace with your frontend's domain
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
 
 require("dotenv").config();
 

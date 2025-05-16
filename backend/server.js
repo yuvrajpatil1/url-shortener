@@ -145,6 +145,8 @@ app.post("/api/login", async (req, res, next) => {
 //   });
 // });
 
+const { shortURL } = require("./utils/hashGenerator");
+
 app.post("/api/shorten", async (req, res, next) => {
   const { longUrl, customUrl } = req.body;
 
@@ -152,7 +154,7 @@ app.post("/api/shorten", async (req, res, next) => {
   console.log("Headers:", req.headers);
   console.log("Body:", req.body);
 
-  // Optional: get userId if auth token exists & is valid
+  // Optional: get userId from token
   let userId = null;
   const authHeader = req.headers.authorization;
   if (authHeader) {
@@ -161,7 +163,7 @@ app.post("/api/shorten", async (req, res, next) => {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       userId = decoded.userId;
     } catch (err) {
-      // invalid token, ignore and proceed as guest
+      // invalid token, treat as guest
     }
   }
 
@@ -179,44 +181,25 @@ app.post("/api/shorten", async (req, res, next) => {
       return res.json({ shortUrl: customUrl, qrCode: qrCodeData });
     }
 
-    const javaProcess = spawn("java", ["HashGenerator", longUrl]);
+    // 🔁 Generate hash using JavaScript
+    const shortUrl = shortURL(longUrl);
 
-    let output = "";
-    let errorOutput = "";
+    if (!shortUrl) {
+      return res.status(500).json({ error: "Hash generation failed" });
+    }
 
-    javaProcess.stdout.on("data", (data) => {
-      output += data.toString();
-    });
+    const existing = await Url.findOne({ shortUrl });
+    const fullShortUrl = `https://slashbyhash.vercel.app/${shortUrl}`;
+    const qrCodeData = await QRCode.toDataURL(fullShortUrl);
 
-    javaProcess.stderr.on("data", (data) => {
-      errorOutput += data.toString();
-    });
+    if (existing) {
+      return res.json({ shortUrl: existing.shortUrl, qrCode: qrCodeData });
+    }
 
-    javaProcess.on("close", async (code) => {
-      if (code !== 0) {
-        console.error("Java process exited with error:", errorOutput);
-        return res.status(500).json({ error: "Hash generation failed" });
-      }
+    const url = new Url({ longUrl, shortUrl, usageCount: 0, userId });
+    await url.save();
 
-      const shortUrl = output.trim();
-
-      if (!shortUrl) {
-        return res.status(500).json({ error: "Empty shortUrl from Java" });
-      }
-
-      const existing = await Url.findOne({ shortUrl });
-      const fullShortUrl = `https://slashbyhash.vercel.app/${shortUrl}`;
-      const qrCodeData = await QRCode.toDataURL(fullShortUrl);
-
-      if (existing) {
-        return res.json({ shortUrl: existing.shortUrl, qrCode: qrCodeData });
-      }
-
-      const url = new Url({ longUrl, shortUrl, usageCount: 0, userId });
-      await url.save();
-
-      res.json({ shortUrl, qrCode: qrCodeData });
-    });
+    res.json({ shortUrl, qrCode: qrCodeData });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Server error" });

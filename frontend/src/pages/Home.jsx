@@ -47,7 +47,7 @@ function Home() {
         config
       );
 
-      setShortUrl(`https://slashbyhash/${res.data.shortUrl}`);
+      setShortUrl(`https://slashbyhash.onrender.com/${res.data.shortUrl}`);
       setQrCode(res.data.qrCode);
 
       // fetch user URLs only if logged in
@@ -81,7 +81,7 @@ function Home() {
     <div className="px-4 sm:px-8 md:px-16 lg:px-24 mt-26">
       {token ? (
         <h1 className="text-xl sm:text-4xl md:font-semibold text-center mb-8">
-          Welcome, {name || email}!
+          Welcome, {email || name}!
         </h1>
       ) : (
         <div className="text-center mb-8">
@@ -194,7 +194,7 @@ function Home() {
               </thead>
               <tbody>
                 {userUrls.map((url) => {
-                  const fullShort = `https://slashbyhash/${
+                  const fullShort = `https://slashbyhash.onrender.com/${
                     url.customUrl || url.shortUrl
                   }`;
                   return (

@@ -11,9 +11,8 @@ const app = express();
 app.use(express.json());
 
 const corsOptions = {
-  origin: "*",
+  origin: "https://slashbyhash.onrender.com", // ✅ your frontend domain
   credentials: true,
-  optionSuccessStatus: 200,
 };
 app.use(cors(corsOptions));
 
@@ -168,7 +167,7 @@ app.post("/api/shorten", async (req, res) => {
       const url = new Url({ longUrl, customUrl, userId });
       await url.save();
 
-      const fullShortUrl = `https://slashbyhash.onrender.com//${customUrl}`;
+      const fullShortUrl = `https://slashbyhash.onrender.com/${customUrl}`;
       const qrCodeData = await QRCode.toDataURL(fullShortUrl);
       return res.json({ shortUrl: customUrl, qrCode: qrCodeData });
     }
@@ -199,7 +198,7 @@ app.post("/api/shorten", async (req, res) => {
       }
 
       const existing = await Url.findOne({ shortUrl });
-      const fullShortUrl = `https://slashbyhash.onrender.com//${shortUrl}`;
+      const fullShortUrl = `https://slashbyhash.onrender.com/${shortUrl}`;
       const qrCodeData = await QRCode.toDataURL(fullShortUrl);
 
       if (existing) {
@@ -262,4 +261,5 @@ app.get("/api/stats/:shortUrl", async (req, res) => {
   res.json({ usageCount: url.usageCount, longUrl: url.longUrl });
 });
 
-app.listen(5000, () => console.log("Server running on port 5000"));
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

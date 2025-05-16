@@ -204,12 +204,12 @@ function Home() {
                     <tr key={url._id} className="border-t border-gray-700">
                       <td className="py-4 px-4 sm:px-6 break-words max-w-xs">
                         <a
-                          href={url.longUrl} // point directly to the long URL
+                          href={url.longUrl} // direct long URL here
                           target="_blank"
                           rel="noreferrer"
                           className="text-indigo-300 underline"
                         >
-                          {fullShort}
+                          {fullShort} {/* text still shows the short URL */}
                         </a>
                       </td>
                       <td className="hidden md:block py-4 px-4 sm:px-6 break-words max-w-3xl">

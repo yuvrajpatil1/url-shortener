@@ -14,7 +14,7 @@ function Login() {
     e.preventDefault();
     try {
       const res = await axios.post(
-        "https://url-shortener-backend-0bgv.onrender.com/api/login",
+        `${import.meta.env.VITE_REACT_APP_BACKEND_URL}/api/login`,
         {
           name,
           email,

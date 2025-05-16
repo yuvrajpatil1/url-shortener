@@ -24,7 +24,7 @@ function Home() {
   const fetchUserUrls = async () => {
     try {
       const res = await axios.get(
-        "https://url-shortener-backend-0bgv.onrender.com/api/urls",
+        `${import.meta.env.VITE_REACT_APP_BACKEND_URL}/api/urls`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -42,7 +42,7 @@ function Home() {
         : {}; // no auth headers for guest
 
       const res = await axios.post(
-        "https://url-shortener-backend-0bgv.onrender.com/api/shorten",
+        `${import.meta.env.VITE_REACT_APP_BACKEND_URL}/api/shorten`,
         { longUrl, customUrl },
         config
       );
@@ -63,7 +63,7 @@ function Home() {
     if (!window.confirm("Delete this URL?")) return;
     try {
       await axios.delete(
-        `https://url-shortener-backend-0bgv.onrender.com/api/urls/${id}`,
+        `${import.meta.env.VITE_REACT_APP_BACKEND_URL}/api/urls/${id}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }

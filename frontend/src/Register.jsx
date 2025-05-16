@@ -12,7 +12,7 @@ function Register() {
     e.preventDefault();
     try {
       await axios.post(
-        "https://url-shortener-backend-0bgv.onrender.com/api/register",
+        `${import.meta.env.VITE_REACT_APP_BACKEND_URL}/api/register`,
         {
           name,
           email,

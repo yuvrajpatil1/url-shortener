@@ -148,6 +148,10 @@ app.post("/api/login", async (req, res, next) => {
 app.post("/api/shorten", async (req, res, next) => {
   const { longUrl, customUrl } = req.body;
 
+  console.log("Incoming shorten request");
+  console.log("Headers:", req.headers);
+  console.log("Body:", req.body);
+
   // Optional: get userId if auth token exists & is valid
   let userId = null;
   const authHeader = req.headers.authorization;

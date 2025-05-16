@@ -38,7 +38,12 @@ function Home() {
   const handleShorten = async () => {
     try {
       const config = token
-        ? { headers: { Authorization: `Bearer ${token}` } }
+        ? {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
         : {}; // no auth headers for guest
 
       const res = await axios.post(

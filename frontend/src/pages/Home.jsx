@@ -47,7 +47,7 @@ function Home() {
         config
       );
 
-      setShortUrl(`https://slashbyhash.onrender.com/${res.data.shortUrl}`);
+      setShortUrl(`https://slashbyhash.vercel.app/${res.data.shortUrl}`);
       setQrCode(res.data.qrCode);
 
       // fetch user URLs only if logged in
@@ -194,7 +194,7 @@ function Home() {
               </thead>
               <tbody>
                 {userUrls.map((url) => {
-                  const fullShort = `https://slashbyhash.onrender.com/${
+                  const fullShort = `https://slashbyhash.vercel.app/${
                     url.customUrl || url.shortUrl
                   }`;
                   return (

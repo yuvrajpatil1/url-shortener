@@ -11,7 +11,7 @@ const app = express();
 app.use(express.json());
 
 const corsOptions = {
-  origin: "https://slashbyhash.onrender.com", // ✅ your frontend domain
+  origin: "https://slashbyhash.vercel.app", // ✅ your frontend domain
   methods: ["POST", "GET", "DELETE", "PUT"],
   credentials: true,
 };
@@ -168,7 +168,7 @@ app.post("/api/shorten", async (req, res) => {
       const url = new Url({ longUrl, customUrl, userId });
       await url.save();
 
-      const fullShortUrl = `https://slashbyhash.onrender.com/${customUrl}`;
+      const fullShortUrl = `https://slashbyhash.vercel.app/${customUrl}`;
       const qrCodeData = await QRCode.toDataURL(fullShortUrl);
       return res.json({ shortUrl: customUrl, qrCode: qrCodeData });
     }
@@ -199,7 +199,7 @@ app.post("/api/shorten", async (req, res) => {
       }
 
       const existing = await Url.findOne({ shortUrl });
-      const fullShortUrl = `https://slashbyhash.onrender.com/${shortUrl}`;
+      const fullShortUrl = `https://slashbyhash.vercel.app/${shortUrl}`;
       const qrCodeData = await QRCode.toDataURL(fullShortUrl);
 
       if (existing) {

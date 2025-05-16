@@ -156,7 +156,7 @@ function Home() {
               <div className="text-center break-words text-xl sm:text-2xl mt-4">
                 <p>
                   <strong>Short URL:</strong>{" "}
-                  <a href={shortUrl} className="text-indigo-400 underline">
+                  <a href={url.longUrl} className="text-indigo-400 underline">
                     {shortUrl}
                   </a>
                 </p>
@@ -166,7 +166,7 @@ function Home() {
         </div>
 
         {/* QR Code */}
-        {shortUrl && qrCode && (
+        {qrCode && (
           <div className="flex flex-col items-center justify-center text-center w-full lg:w-1/2">
             <p className="text-xl sm:text-2xl font-semibold mb-4">QR Code:</p>
             <img
@@ -204,7 +204,7 @@ function Home() {
                     <tr key={url._id} className="border-t border-gray-700">
                       <td className="py-4 px-4 sm:px-6 break-words max-w-xs">
                         <a
-                          href={fullShort}
+                          href={url.longUrl} // point directly to the long URL
                           target="_blank"
                           rel="noreferrer"
                           className="text-indigo-300 underline"

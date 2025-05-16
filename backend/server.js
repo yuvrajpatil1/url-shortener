@@ -12,6 +12,7 @@ app.use(express.json());
 
 const corsOptions = {
   origin: "https://slashbyhash.onrender.com", // ✅ your frontend domain
+  methods: ["POST", "GET", "DELETE", "PUT"],
   credentials: true,
 };
 app.use(cors(corsOptions));

@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 function Login() {
   const { login } = useContext(AuthContext);
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
@@ -13,10 +14,11 @@ function Login() {
     e.preventDefault();
     try {
       const res = await axios.post("http://localhost:5000/api/login", {
+        name,
         email,
         password,
       });
-      login(res.data.token, res.data.email);
+      login(res.data.token, res.data.email, res.data.name);
       alert("Login successful");
       navigate("/"); // Redirect to homepage
     } catch (err) {

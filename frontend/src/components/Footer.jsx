@@ -1,8 +1,6 @@
-import React from "react";
-
 function Footer() {
   return (
-    <div className="fixed bottom-0 left-0 w-full text-sm text-white p-4 border-t border-[#3a3a3a] text-center  z-50">
+    <div className="text-sm text-white p-4 border-t border-[#3a3a3a] text-center bg-black">
       Developed with ❤️ by{" "}
       <a
         className="underline"
@@ -16,5 +14,3 @@ function Footer() {
     </div>
   );
 }
-
-export default Footer;

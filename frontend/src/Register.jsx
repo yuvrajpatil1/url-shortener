@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 function Register() {
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
@@ -11,6 +12,7 @@ function Register() {
     e.preventDefault();
     try {
       await axios.post("http://localhost:5000/api/register", {
+        name,
         email,
         password,
       });
@@ -36,6 +38,22 @@ function Register() {
               <form onSubmit={handleSubmit} className="mt-8 space-y-6">
                 <div className="rounded-md shadow-sm">
                   <div>
+                    <label className="sr-only" htmlFor="name">
+                      Enter your name:
+                    </label>
+                    <input
+                      placeholder="Name"
+                      className="appearance-none relative block w-full px-3 py-3 border border-gray-700 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                      required
+                      autoComplete="current-name"
+                      type="text"
+                      name="name"
+                      id="name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                    />
+                  </div>
+                  <div className="mt-4">
                     <label className="sr-only" htmlFor="email">
                       Email address
                     </label>

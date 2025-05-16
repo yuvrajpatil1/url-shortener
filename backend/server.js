@@ -48,9 +48,9 @@ const auth = (req, res, next) => {
 console.log("Hiiiiiii");
 // Register new user
 app.post("/api/register", async (req, res) => {
-  const { email, password } = req.body;
+  const { name, email, password } = req.body;
   try {
-    const user = new User({ email, password });
+    const user = new User({ name, email, password });
     await user.save();
     res.status(201).json({ message: "User registered" });
   } catch (err) {
@@ -64,7 +64,7 @@ app.post("/api/register", async (req, res) => {
 
 // Login user
 app.post("/api/login", async (req, res) => {
-  const { email, password } = req.body;
+  const { name, email, password } = req.body;
   try {
     const user = await User.findOne({ email });
     if (!user) return res.status(400).json({ error: "User not found" });
@@ -73,10 +73,10 @@ app.post("/api/login", async (req, res) => {
     if (!isMatch) return res.status(400).json({ error: "Invalid credentials" });
 
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "1d",
+      expiresIn: "999999999d",
     });
 
-    res.json({ token, email: user.email });
+    res.json({ token, email: user.email, name: user.name });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Server error" });

@@ -5,14 +5,17 @@ export const AuthContext = createContext();
 export function AuthProvider({ children }) {
   const [token, setToken] = useState(null);
   const [email, setEmail] = useState(null);
+  const [name, setName] = useState(null);
 
   // On mount, check localStorage for saved auth info
   useEffect(() => {
     const savedToken = localStorage.getItem("token");
     const savedEmail = localStorage.getItem("email");
+    const savedName = localStorage.getItem("name");
     if (savedToken) {
       setToken(savedToken);
       setEmail(savedEmail);
+      setName(savedName);
     }
   }, []);
 
@@ -21,6 +24,7 @@ export function AuthProvider({ children }) {
     setEmail(email);
     localStorage.setItem("token", token);
     localStorage.setItem("email", email);
+    localStorage.setItem("name", name); // Make sure backend sends it
   };
 
   const logout = () => {
@@ -31,7 +35,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ token, email, login, logout }}>
+    <AuthContext.Provider value={{ token, email, login, logout, name }}>
       {children}
     </AuthContext.Provider>
   );

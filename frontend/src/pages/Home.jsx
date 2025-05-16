@@ -1,10 +1,9 @@
 import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import { AuthContext } from "../AuthContext";
-import Footer from "../components/footer";
 
 function Home() {
-  const { token, logout, email } = useContext(AuthContext);
+  const { token, logout, email, name } = useContext(AuthContext);
   const [longUrl, setLongUrl] = useState("");
   const [customUrl, setCustomUrl] = useState("");
   const [shortUrl, setShortUrl] = useState("");
@@ -76,12 +75,12 @@ function Home() {
     <div className="px-4 sm:px-8 md:px-16 lg:px-24 mt-26">
       {token ? (
         <h1 className="text-xl sm:text-4xl md:font-semibold text-center mb-8">
-          Welcome, {email}!
+          Welcome, {name}!
         </h1>
       ) : (
         <div className="text-center mb-8">
           <h1 className="text-3xl sm:text-4xl font-semibold">
-            Welcome to the URL Shortener!
+            Welcome to SlashByHash!
           </h1>
           <p className="mt-2">
             <a href="/login" className="text-indigo-500 underline">
@@ -134,7 +133,6 @@ function Home() {
                 onChange={(e) => setCustomUrl(e.target.value)}
                 placeholder="Custom URL (optional)"
                 className="w-full md:px-4 md:py-3 py-2 px-2 border border-gray-700 bg-gray-700 rounded-md text-sm focus:outline-none focus:ring-indigo-500"
-                disabled={!token}
               />
             </div>
 
@@ -178,11 +176,13 @@ function Home() {
             Your URLs
           </h2>
           <div className="overflow-x-auto">
-            <table className="min-w-full bg-[#0F172B] text-white rounded-lg shadow-md text-sm sm:text-base">
+            <table className="min-w-full bg-[#0F172B] text-white overflow-hidden rounded-lg shadow-md text-sm sm:text-base">
               <thead className="bg-[#121D3E] text-left">
                 <tr>
                   <th className="py-3 px-4 sm:px-6">Short URL</th>
-                  <th className="py-3 px-4 sm:px-6">Original URL</th>
+                  <th className="py-3 px-4 sm:px-6 hidden md:block ">
+                    Original URL
+                  </th>
                   <th className="py-3 px-4 sm:px-6">Action</th>
                 </tr>
               </thead>
@@ -198,15 +198,15 @@ function Home() {
                           href={fullShort}
                           target="_blank"
                           rel="noreferrer"
-                          className="text-indigo-400 underline"
+                          className="text-indigo-300 underline"
                         >
                           {fullShort}
                         </a>
                       </td>
-                      <td className="py-4 px-4 sm:px-6 break-words max-w-md">
+                      <td className="hidden md:block py-4 px-4 sm:px-6 break-words max-w-3xl">
                         {url.longUrl}
                       </td>
-                      <td className="py-4 px-4 sm:px-6">
+                      <td className="py-4 px-4 sm:px-6 max-w-sm">
                         <button
                           onClick={() => handleDelete(url._id)}
                           className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-md text-sm"
@@ -222,8 +222,6 @@ function Home() {
           </div>
         </div>
       )}
-
-      <Footer />
     </div>
   );
 }

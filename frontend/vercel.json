@@ -1,3 +1,18 @@
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+  "rewrites": [
+    {
+      "source": "/:shortUrl",
+      "has": [
+        {
+          "type": "host",
+          "value": "slashbyhash.vercel.app"
+        }
+      ],
+      "destination": "https://url-shortener-backend-0bgv.onrender.com/:shortUrl"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
 }

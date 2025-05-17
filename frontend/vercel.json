@@ -11,6 +11,18 @@
       "destination": "https://url-shortener-backend-0bgv.onrender.com/:shortUrl"
     },
     {
+      "source": "/register",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/login",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/delete",
+      "destination": "/index.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }

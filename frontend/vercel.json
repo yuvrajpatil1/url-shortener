@@ -1,15 +1,11 @@
 {
   "rewrites": [
     {
-      "source": "/:shortUrl",
+      "source": "/((?!login|register|delete|dashboard|profile).+)",
       "has": [
         {
           "type": "host",
           "value": "slashbyhash.vercel.app"
-        },
-        {
-          "type": "missing",
-          "value": "/(login|register|delete|dashboard|profile)"
         }
       ],
       "destination": "https://url-shortener-backend-0bgv.onrender.com/:shortUrl"

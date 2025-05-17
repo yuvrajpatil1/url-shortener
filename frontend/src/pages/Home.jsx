@@ -168,7 +168,7 @@ function Home() {
         {/* QR Code */}
         {qrCode && (
           <div className="flex flex-col items-center justify-center text-center w-full lg:w-1/2">
-            <p className="text-xl sm:text-2xl font-semibold mb-4">QR Code:</p>
+            <p className="text-xl sm:text-2xl font-bold mb-4">QR Code:</p>
             <img
               src={qrCode}
               alt="QR Code"

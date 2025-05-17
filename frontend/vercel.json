@@ -1,16 +1,6 @@
 {
   "rewrites": [
     {
-      "source": "/((?!login|register|delete|dashboard|profile).+)",
-      "has": [
-        {
-          "type": "host",
-          "value": "slashbyhash.vercel.app"
-        }
-      ],
-      "destination": "https://url-shortener-backend-0bgv.onrender.com/:shortUrl"
-    },
-    {
       "source": "/register",
       "destination": "/index.html"
     },
@@ -21,6 +11,16 @@
     {
       "source": "/delete",
       "destination": "/index.html"
+    },
+    {
+      "source": "/:shortUrl",
+      "has": [
+        {
+          "type": "host",
+          "value": "slashbyhash.vercel.app"
+        }
+      ],
+      "destination": "https://url-shortener-backend-0bgv.onrender.com/:shortUrl"
     },
     {
       "source": "/(.*)",
